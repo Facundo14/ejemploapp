@@ -17,7 +17,7 @@ class _RegistrarPageState extends State<RegistrarPage> {
   final _nombreController = new TextEditingController();
   final _emailController = new TextEditingController();
   final _passwordController = new TextEditingController();
-
+  final _formKeyCreate = GlobalKey<FormState>();
   @override
   void initState() {
     _codigoController.text = '';
@@ -27,46 +27,58 @@ class _RegistrarPageState extends State<RegistrarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Registro!')),
-        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          _LoginForm(
+        appBar: AppBar(title: Text('Registro')),
+        body: Container(
+          padding: EdgeInsets.all(10),
+          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            _LoginForm(
               emailController: _emailController,
               nombreController: _nombreController,
-              passwordController: _passwordController),
-          SizedBox(height: 20),
-          MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: Text('Guardar', style: TextStyle(color: Colors.white)),
-              onPressed: () {
-                final user = new UserModel(
-                    nombre: _nombreController.text,
-                    email: _emailController.text,
-                    password: _passwordController.text);
-                db.agregaUser(user);
-                DataProvider.obtieneUsersProvider();
-                print(DataProvider.streamUsersController.first);
-                Navigator.pushNamed(context, 'login');
-              },
-              color: Colors.blue),
-        ]));
+              passwordController: _passwordController,
+              formKeyCreate: _formKeyCreate,
+            ),
+            SizedBox(height: 20),
+            MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                child: Text('Guardar', style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  if (_formKeyCreate.currentState!.validate()) {
+                    final user = new UserModel(
+                        nombre: _nombreController.text,
+                        email: _emailController.text,
+                        password: _passwordController.text);
+                    db.agregaUser(user);
+                    DataProvider.obtieneUsersProvider(
+                        _emailController.text, _passwordController.text);
+                    final res = DataProvider.streamUsersController.first;
+                    print(res);
+                    Navigator.pushNamed(context, 'login');
+                  }
+                },
+                color: Colors.blue),
+          ]),
+        ));
   }
 }
 
 class _LoginForm extends StatelessWidget {
   const _LoginForm({
     Key? key,
+    required GlobalKey<FormState> formKeyCreate,
     required TextEditingController emailController,
     required TextEditingController nombreController,
     required TextEditingController passwordController,
   })  : _emailController = emailController,
         _nombreController = nombreController,
         _passwordController = passwordController,
+        _formKeyCreate = formKeyCreate,
         super(key: key);
 
   final TextEditingController _nombreController;
   final TextEditingController _emailController;
   final TextEditingController _passwordController;
+  final GlobalKey<FormState> _formKeyCreate;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -74,6 +86,7 @@ class _LoginForm extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
           child: Form(
+            key: _formKeyCreate,
             child: Column(
               children: [
                 TextFormField(

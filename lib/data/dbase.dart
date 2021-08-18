@@ -179,14 +179,13 @@ class Dbase {
     return lstUsers;
   }
 
-  Future<List<UserModel>> obtieneUsers() async {
-    List<UserModel> lstUsers = [];
+  Future<UserModel> obtieneUsers(String email, String pass) async {
+    UserModel lstUsers = new UserModel(nombre: '', email: '', password: '');
     try {
       final db = await database;
-      final res = await db.query('users', orderBy: 'Nombre');
-      lstUsers = (res.isNotEmpty)
-          ? res.map((item) => UserModel.fromJson(item)).toList()
-          : [];
+      final res = await db.query('users',
+          where: 'Email = ? and Password = ?', whereArgs: [email, pass]);
+      if (res.isNotEmpty) lstUsers = UserModel.fromJson(res.first);
     } catch (errorsql) {
       print(errorsql.toString());
     } finally {}

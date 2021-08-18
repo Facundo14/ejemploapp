@@ -19,16 +19,18 @@ class DataProvider {
   }
 
   /// ---------------- USERS ---------------------------*/
-  static final StreamController<List<UserModel>> _streamUsersController =
+  static final StreamController<UserModel> _streamUsersController =
       new StreamController.broadcast();
 
-  static Stream<List<UserModel>> get streamUsersController =>
+  static Stream<UserModel> get streamUsersController =>
       _streamUsersController.stream;
 
-  static void obtieneUsersProvider() async {
+  static Future<UserModel> obtieneUsersProvider(
+      String email, String pass) async {
     final db = new Dbase();
-    final listaUsers = await db.obtieneUsers();
+    final listaUsers = await db.obtieneUsers(email, pass);
     _streamUsersController.add(listaUsers);
+    return listaUsers;
   }
 
   /// ---------------- CIERRES DE LOS STREAMS ---------------------------*/
