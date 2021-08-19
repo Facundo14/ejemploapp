@@ -26,8 +26,8 @@ dependencies:
     sdk: flutter
   image_picker: ^0.8.3+2
   path_provider: ^2.0.2
+  shared_preferences: null
   sqflite: ^2.0.0+3
-  shared_preferences:
 
 dev_dependencies:
   flutter_test:

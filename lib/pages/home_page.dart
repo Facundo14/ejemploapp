@@ -48,9 +48,12 @@ class _HomePageState extends State<HomePage> {
                 });
           }),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => Navigator.pushNamed(context, 'mantenimiento'),
-      ),
+          child: Icon(Icons.add),
+          onPressed: () {
+            final PlatoModel lista2 =
+                new PlatoModel(codigo: '', descripcion: '', precio: 0);
+            Navigator.pushNamed(context, 'mantenimiento', arguments: lista2);
+          }),
     );
   }
 
@@ -120,7 +123,9 @@ class _HomePageState extends State<HomePage> {
       ),
       trailing: Text('\$ ' + lista[index].precio.toString(),
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, 'mantenimiento', arguments: lista[index]);
+      },
     );
   }
 }

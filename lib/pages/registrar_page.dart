@@ -1,5 +1,4 @@
 import 'package:ejemplo_app/data/dbase.dart';
-import 'package:ejemplo_app/models/plato_model.dart';
 import 'package:ejemplo_app/models/user_model.dart';
 import 'package:ejemplo_app/provider/data_provider.dart';
 import 'package:ejemplo_app/ui/input_decorations.dart';
@@ -28,37 +27,70 @@ class _RegistrarPageState extends State<RegistrarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Registro')),
-        body: Container(
-          padding: EdgeInsets.all(10),
-          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-            _LoginForm(
-              emailController: _emailController,
-              nombreController: _nombreController,
-              passwordController: _passwordController,
-              formKeyCreate: _formKeyCreate,
-            ),
-            SizedBox(height: 20),
-            MaterialButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                child: Text('Guardar', style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  if (_formKeyCreate.currentState!.validate()) {
-                    final user = new UserModel(
-                        nombre: _nombreController.text,
-                        email: _emailController.text,
-                        password: _passwordController.text);
-                    db.agregaUser(user);
-                    DataProvider.obtieneUsersProvider(
-                        _emailController.text, _passwordController.text);
-                    final res = DataProvider.streamUsersController.first;
-                    print(res);
-                    Navigator.pushNamed(context, 'login');
-                  }
-                },
-                color: Colors.blue),
-          ]),
-        ));
+        body: _Body(
+            emailController: _emailController,
+            nombreController: _nombreController,
+            passwordController: _passwordController,
+            formKeyCreate: _formKeyCreate,
+            db: db));
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body({
+    Key? key,
+    required TextEditingController emailController,
+    required TextEditingController nombreController,
+    required TextEditingController passwordController,
+    required GlobalKey<FormState> formKeyCreate,
+    required this.db,
+  })  : _emailController = emailController,
+        _nombreController = nombreController,
+        _passwordController = passwordController,
+        _formKeyCreate = formKeyCreate,
+        super(key: key);
+
+  final TextEditingController _emailController;
+  final TextEditingController _nombreController;
+  final TextEditingController _passwordController;
+  final GlobalKey<FormState> _formKeyCreate;
+  final Dbase db;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          _LoginForm(
+            emailController: _emailController,
+            nombreController: _nombreController,
+            passwordController: _passwordController,
+            formKeyCreate: _formKeyCreate,
+          ),
+          SizedBox(height: 20),
+          MaterialButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: Text('Guardar', style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                if (_formKeyCreate.currentState!.validate()) {
+                  final user = new UserModel(
+                      nombre: _nombreController.text,
+                      email: _emailController.text,
+                      password: _passwordController.text);
+                  db.agregaUser(user);
+                  DataProvider.obtieneUsersProvider(
+                      _emailController.text, _passwordController.text);
+                  final res = DataProvider.streamUsersController.first;
+                  print(res);
+                  Navigator.pushNamed(context, 'login');
+                }
+              },
+              color: Colors.blue),
+        ]),
+      ),
+    );
   }
 }
 
