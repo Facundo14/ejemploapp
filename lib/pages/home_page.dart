@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:ejemplo_app/data/dbase.dart';
 import 'package:ejemplo_app/models/plato_model.dart';
 import 'package:ejemplo_app/provider/data_provider.dart';
+import 'package:ejemplo_app/share_prefs/user_preferences.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,9 +22,20 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final pref = new UserPreferences();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista'),
+        title: Text('Lista de Platos'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              pref.nombreUsuario = '';
+              Navigator.pushReplacementNamed(context, 'login');
+            },
+          )
+        ],
       ),
       body: StreamBuilder(
           stream: DataProvider.streamPlatosController,

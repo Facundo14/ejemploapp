@@ -1,4 +1,5 @@
 import 'package:ejemplo_app/provider/data_provider.dart';
+import 'package:ejemplo_app/share_prefs/user_preferences.dart';
 import 'package:ejemplo_app/ui/input_decorations.dart';
 import 'package:ejemplo_app/widgets/auth_background.dart';
 import 'package:ejemplo_app/widgets/card_container.dart';
@@ -162,6 +163,7 @@ class _BotonIngreso extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pref = UserPreferences();
     return MaterialButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         disabledColor: Colors.grey,
@@ -180,7 +182,7 @@ class _BotonIngreso extends StatelessWidget {
                 _userEmailController.text, _userPasswordController.text);
             final res = await DataProvider.streamUsersController.first;
             //print(res);
-
+            pref.nombreUsuario = res.email;
             if (res.email == _userEmailController.text &&
                 res.password == _userPasswordController.text) {
               Navigator.pushNamed(context, 'home');

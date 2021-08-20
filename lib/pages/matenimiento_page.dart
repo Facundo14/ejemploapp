@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:ejemplo_app/data/dbase.dart';
 import 'package:ejemplo_app/models/plato_model.dart';
 import 'package:ejemplo_app/provider/data_provider.dart';
+import 'package:ejemplo_app/share_prefs/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -41,6 +42,7 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final pref = new UserPreferences();
     final PlatoModel args =
         ModalRoute.of(context)!.settings.arguments as PlatoModel;
     if (f) {
@@ -55,7 +57,18 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
       f = false;
     }
     return Scaffold(
-      appBar: AppBar(title: Text('Mantenimiento')),
+      appBar: AppBar(
+        title: Text('Mantenimiento'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              pref.nombreUsuario = '';
+              Navigator.pushReplacementNamed(context, 'login');
+            },
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         child: Form(
           key: _keyFormMantenimiento,

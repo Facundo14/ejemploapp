@@ -7,7 +7,7 @@ import 'package:ejemplo_app/ui/input_decorations.dart';
 class RegistrarPage extends StatelessWidget {
   final db = new Dbase();
 
-  final _codigoController = new TextEditingController();
+  //final _codigoController = new TextEditingController();
   final _nombreController = new TextEditingController();
   final _emailController = new TextEditingController();
   final _passwordController = new TextEditingController();
@@ -16,7 +16,10 @@ class RegistrarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Registro')),
+        appBar: AppBar(
+          title: Text('Registro'),
+          centerTitle: true,
+        ),
         body: _Body(
             emailController: _emailController,
             nombreController: _nombreController,
@@ -122,9 +125,9 @@ class _LoginForm extends StatelessWidget {
                       labelText: 'Nombre',
                       prefixIcon: Icons.people),
                   validator: (value) {
-                    return (value != null && value.length >= 6)
+                    return (value != null && value.length >= 3)
                         ? null
-                        : 'La contraseña debe de ser de 6 cracteres';
+                        : 'El nombre debe de ser de 3 cracteres o mas';
                   },
                 ),
                 SizedBox(height: 30),
