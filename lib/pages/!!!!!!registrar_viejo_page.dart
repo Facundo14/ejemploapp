@@ -1,10 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:ejemplo_app/data/dbase.dart';
 import 'package:ejemplo_app/models/user_model.dart';
 import 'package:ejemplo_app/provider/data_provider.dart';
 import 'package:ejemplo_app/ui/input_decorations.dart';
+import 'package:flutter/material.dart';
 
-class RegistrarPage extends StatelessWidget {
+class RegistrarPage extends StatefulWidget {
+  @override
+  _RegistrarPageState createState() => _RegistrarPageState();
+}
+
+class _RegistrarPageState extends State<RegistrarPage> {
   final db = new Dbase();
 
   final _codigoController = new TextEditingController();
@@ -12,6 +17,11 @@ class RegistrarPage extends StatelessWidget {
   final _emailController = new TextEditingController();
   final _passwordController = new TextEditingController();
   final _formKeyCreate = GlobalKey<FormState>();
+  @override
+  void initState() {
+    _codigoController.text = '';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

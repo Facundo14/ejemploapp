@@ -25,7 +25,7 @@ class PlatoModel {
   factory PlatoModel.fromJson(Map<String, dynamic> json) => PlatoModel(
         codigo: json["Codigo"],
         descripcion: json["Descripcion"],
-        picture: json["Picture"] ?? null,
+        picture: json["Picture"],
         precio: json["Precio"].toDouble(),
       );
 

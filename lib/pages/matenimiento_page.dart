@@ -13,6 +13,7 @@ class MantenimientoPage extends StatefulWidget {
 
 class _MantenimientoPageState extends State<MantenimientoPage> {
   File? _image;
+  bool f = true;
 
   final picker = ImagePicker();
   // Implementing the image picker
@@ -42,13 +43,16 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
   Widget build(BuildContext context) {
     final PlatoModel args =
         ModalRoute.of(context)!.settings.arguments as PlatoModel;
-    if (args.codigo != '') {
-      setState(() {
-        _codigoController.text = args.codigo;
-        _descripcionController.text = args.descripcion;
-        _precioController.text = args.precio.toString();
-        _image = File(args.picture.toString());
-      });
+    if (f) {
+      if (args.codigo != '') {
+        setState(() {
+          _codigoController.text = args.codigo;
+          _descripcionController.text = args.descripcion;
+          _precioController.text = args.precio.toString();
+          _image = args.picture == null ? null : File(args.picture.toString());
+        });
+      }
+      f = false;
     }
     return Scaffold(
       appBar: AppBar(title: Text('Mantenimiento')),
@@ -68,22 +72,21 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
                     child: _image != null
                         ? Image.file(
                             _image!,
-                            width: double.infinity,
+                            width: 300,
                             height: 200,
                           )
-                        : Text('Please select an image'),
+                        : Image(image: AssetImage('images/no-image.png')),
                   ),
-                  SizedBox(height: 35),
+                  SizedBox(height: 10),
                   Center(
                     child: ElevatedButton(
-                      child: Text('Select An Image'),
+                      child: Text('Selecciona una imagen'),
                       onPressed: _openImagePicker,
                     ),
                   ),
                 ]),
               ),
             ),
-            SizedBox(height: 10),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
@@ -140,7 +143,7 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
               final plato = new PlatoModel(
                   codigo: _codigoController.text,
                   descripcion: _descripcionController.text,
-                  picture: _image!.path.toString(),
+                  picture: _image == null ? null : _image?.path.toString(),
                   precio: double.parse(_precioController.text));
               db.modificaPlato(plato);
               DataProvider.obtienePlatosProvider();
@@ -149,7 +152,7 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
               final plato = new PlatoModel(
                   codigo: _codigoController.text,
                   descripcion: _descripcionController.text,
-                  picture: _image!.path.toString(),
+                  picture: _image?.path ?? null,
                   precio: double.parse(_precioController.text));
               db.agregaPlato(plato);
               DataProvider.obtienePlatosProvider();

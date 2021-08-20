@@ -1,4 +1,3 @@
-import 'package:ejemplo_app/models/user_model.dart';
 import 'package:ejemplo_app/provider/data_provider.dart';
 import 'package:ejemplo_app/ui/input_decorations.dart';
 import 'package:ejemplo_app/widgets/auth_background.dart';

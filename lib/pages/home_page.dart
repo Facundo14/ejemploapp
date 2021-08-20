@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:ejemplo_app/data/dbase.dart';
 import 'package:ejemplo_app/models/plato_model.dart';
 import 'package:ejemplo_app/provider/data_provider.dart';
@@ -32,7 +33,9 @@ class _HomePageState extends State<HomePage> {
               return Center(child: CircularProgressIndicator());
             }
             final List<PlatoModel> lista = snapshot.data;
-            return ListView.builder(
+            return ListView.separated(
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
                 itemCount: lista.length,
                 itemBuilder: (_, int index) {
                   return Container(
@@ -114,18 +117,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  ListTile _lista(List<PlatoModel> lista, int index) {
-    return ListTile(
-      leading: Image.file(File(lista[index].picture.toString())),
-      title: Text(
-        lista[index].descripcion,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+  BounceInLeft _lista(List<PlatoModel> lista, int index) {
+    final item = lista[index];
+    print('Esto es ${item.picture.toString()}');
+    return BounceInLeft(
+      delay: Duration(milliseconds: 200 * index),
+      child: ListTile(
+        leading: item.picture != null
+            ? Image.file(File(item.picture.toString()))
+            : Image(image: AssetImage('images/no-image.png')),
+        title: Text(
+          item.descripcion,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        trailing: Text('\$ ' + item.precio.toString(),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        onTap: () {
+          Navigator.pushNamed(context, 'mantenimiento', arguments: item);
+        },
       ),
-      trailing: Text('\$ ' + lista[index].precio.toString(),
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-      onTap: () {
-        Navigator.pushNamed(context, 'mantenimiento', arguments: lista[index]);
-      },
     );
   }
 }
