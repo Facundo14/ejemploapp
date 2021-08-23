@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pref = new UserPreferences();
+    DataProvider.obtienePlatosProvider();
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista de Platos'),
@@ -30,7 +31,7 @@ class HomePage extends StatelessWidget {
           // initialData: initialData,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
-              return Center(child: Container());
+              return Center(child: CircularProgressIndicator());
             }
             final List<PlatoModel> lista = snapshot.data;
             return ListView.separated(

@@ -1,11 +1,12 @@
+import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:ejemplo_app/data/dbase.dart';
 import 'package:ejemplo_app/models/plato_model.dart';
 import 'package:ejemplo_app/provider/data_provider.dart';
 import 'package:ejemplo_app/share_prefs/user_preferences.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ejemplo_app/ui/input_decorations.dart';
 
 class MantenimientoPage extends StatefulWidget {
   @override
@@ -103,9 +104,13 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
-                decoration: InputDecoration(labelText: 'Codigo'),
                 controller: _codigoController,
                 cursorColor: Theme.of(context).accentColor,
+                decoration: InputDecorations.authInputDecoration(
+                  hintText: 'Codigo',
+                  labelText: 'Codigo',
+                  prefixIcon: Icons.qr_code,
+                ),
                 validator: (value) {
                   return (value != null && value.length >= 3)
                       ? null
@@ -118,9 +123,11 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
-                decoration: InputDecoration(labelText: 'Descripcion'),
                 controller: _descripcionController,
-                cursorColor: Theme.of(context).accentColor,
+                decoration: InputDecorations.authInputDecoration(
+                    hintText: 'Descripcion',
+                    labelText: 'Descripcion',
+                    prefixIcon: Icons.description),
                 validator: (value) {
                   return (value != null && value.length >= 6)
                       ? null
@@ -134,9 +141,11 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Precio'),
                 controller: _precioController,
-                cursorColor: Theme.of(context).accentColor,
+                decoration: InputDecorations.authInputDecoration(
+                    hintText: 'Precio',
+                    labelText: 'Precio',
+                    prefixIcon: Icons.money),
                 validator: (value) {
                   return (value != null && value.length >= 3)
                       ? null
@@ -150,7 +159,7 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.save),
-        onPressed: () async {
+        onPressed: () {
           if (_keyFormMantenimiento.currentState!.validate()) {
             if (args.codigo != '') {
               final plato = new PlatoModel(
