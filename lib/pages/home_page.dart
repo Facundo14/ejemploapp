@@ -43,9 +43,7 @@ class HomePage extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        Expanded(
-                          child: _borradoDismiss(lista, index, context),
-                        )
+                        Expanded(child: _borradoDismiss(lista, index, context))
                       ],
                     ),
                   );
@@ -72,14 +70,8 @@ Dismissible _borradoDismiss(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(
-              Icons.delete,
-              color: Colors.white,
-            ),
-            Text(
-              'Eliminar',
-              style: TextStyle(color: Colors.white),
-            ),
+            Icon(Icons.delete, color: Colors.white),
+            Text('Eliminar', style: TextStyle(color: Colors.white)),
           ],
         ),
       ),
@@ -96,22 +88,14 @@ Dismissible _borradoDismiss(
         context: context,
         builder: (context) => AlertDialog(
           title: Text('Eliminar plato'),
-          content: Text(
-            'Confirma la eliminacion?',
-          ),
+          content: Text('¿Confirma la eliminación?'),
           actions: <Widget>[
             TextButton(
-              child: Text('No'),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-            ),
+                child: Text('No'),
+                onPressed: () => Navigator.of(context).pop(false)),
             TextButton(
-              child: Text('Si'),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
+                child: Text('Si'),
+                onPressed: () => Navigator.of(context).pop(true)),
           ],
         ),
       );

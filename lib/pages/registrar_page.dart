@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:ejemplo_app/data/dbase.dart';
 import 'package:ejemplo_app/models/user_model.dart';
 import 'package:ejemplo_app/provider/data_provider.dart';
+
+import 'package:ejemplo_app/widgets/widgets.dart';
 import 'package:ejemplo_app/ui/input_decorations.dart';
 
 class RegistrarPage extends StatelessWidget {
@@ -131,42 +134,9 @@ class _LoginForm extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 30),
-                TextFormField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _emailController,
-                  autocorrect: false,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecorations.authInputDecoration(
-                      hintText: 'Email',
-                      labelText: 'Email',
-                      prefixIcon: Icons.alternate_email_sharp),
-                  validator: (value) {
-                    String pattern =
-                        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                    RegExp regExp = new RegExp(pattern);
-
-                    return regExp.hasMatch(value ?? '')
-                        ? null
-                        : 'El valor no es un correo';
-                  },
-                ),
+                EmailInput(userEmailController: _emailController),
                 SizedBox(height: 30),
-                TextFormField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _passwordController,
-                  autocorrect: false,
-                  obscureText: true,
-                  keyboardType: TextInputType.visiblePassword,
-                  decoration: InputDecorations.authInputDecoration(
-                      hintText: 'Contraseña',
-                      labelText: 'Contraseña',
-                      prefixIcon: Icons.lock),
-                  validator: (value) {
-                    return (value != null && value.length >= 6)
-                        ? null
-                        : 'La contraseña debe de ser de 6 cracteres';
-                  },
-                ),
+                PassInput(userPasswordController: _passwordController),
                 SizedBox(height: 30),
               ],
             ),
