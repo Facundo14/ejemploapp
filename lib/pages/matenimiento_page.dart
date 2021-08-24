@@ -76,19 +76,15 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Container(
               child: Padding(
-                padding: const EdgeInsets.all(35),
+                padding: const EdgeInsets.all(10),
                 child: Column(children: [
                   Container(
                     alignment: Alignment.center,
-                    width: double.infinity,
+                    width: 245,
                     height: 200,
                     color: Colors.grey[300],
                     child: _image != null
-                        ? Image.file(
-                            _image!,
-                            width: 300,
-                            height: 200,
-                          )
+                        ? Image.file(_image!, width: 245, height: 200)
                         : Image(image: AssetImage('images/no-image.png')),
                   ),
                   SizedBox(height: 10),
@@ -162,7 +158,7 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
         onPressed: () {
           if (_keyFormMantenimiento.currentState!.validate()) {
             if (args.codigo != '') {
-              final plato = new PlatoModel(
+              final plato = PlatoModel(
                   codigo: _codigoController.text,
                   descripcion: _descripcionController.text,
                   picture: _image == null ? null : _image?.path.toString(),
@@ -183,7 +179,6 @@ class _MantenimientoPageState extends State<MantenimientoPage> {
           }
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

@@ -24,7 +24,7 @@ class _HederIcon extends StatelessWidget {
         margin: EdgeInsets.only(top: 30),
         width: double.infinity,
         child: Icon(
-          Icons.person_pin,
+          Icons.person_pin_sharp,
           color: Colors.white,
           size: 100,
         ),

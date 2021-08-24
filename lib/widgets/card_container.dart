@@ -17,9 +17,8 @@ class CardContainer extends StatelessWidget {
     );
   }
 
-  BoxDecoration _createCardShape() => BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(25),
+  BoxDecoration _createCardShape() => BoxDecoration(color: Colors.white,
+          // borderRadius: BorderRadius.circular(25),
           boxShadow: [
             BoxShadow(
                 color: Colors.black12, blurRadius: 15, offset: Offset(0, 5))

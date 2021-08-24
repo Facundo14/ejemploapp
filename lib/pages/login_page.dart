@@ -97,7 +97,7 @@ class _BotonIngreso extends StatelessWidget {
   Widget build(BuildContext context) {
     final pref = UserPreferences();
     return MaterialButton(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       disabledColor: Colors.grey,
       elevation: 0,
       color: Colors.blue,
@@ -114,7 +114,7 @@ class _BotonIngreso extends StatelessWidget {
           pref.nombreUsuario = res.email;
           if (res.email == _userEmailController.text &&
               res.password == _userPasswordController.text) {
-            Navigator.pushNamed(context, 'home');
+            Navigator.pushReplacementNamed(context, 'home');
           } else {
             showDialog(
               context: context,

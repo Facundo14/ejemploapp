@@ -6,9 +6,9 @@ class InputDecorations {
       required String labelText,
       IconData? prefixIcon}) {
     return InputDecoration(
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.blueAccent)),
-        focusedBorder: UnderlineInputBorder(
+        focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.blueAccent, width: 2)),
         hintText: hintText,
         labelText: labelText,

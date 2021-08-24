@@ -19,6 +19,7 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
+            tooltip: 'Salir',
             onPressed: () {
               pref.nombreUsuario = '';
               Navigator.pushReplacementNamed(context, 'login');
@@ -64,14 +65,17 @@ Dismissible _borradoDismiss(
     List<PlatoModel> lista, int index, BuildContext context) {
   return Dismissible(
     background: Container(
-      color: Colors.red,
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(Icons.delete, color: Colors.white),
-            Text('Eliminar', style: TextStyle(color: Colors.white)),
+            Icon(Icons.delete, color: Colors.red),
+            Text(
+              'Eliminar',
+              style: TextStyle(
+                  color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20),
+            ),
           ],
         ),
       ),
